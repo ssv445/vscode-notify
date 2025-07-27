@@ -9,15 +9,11 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": ["onStartupFinished"],
   "main": "./out/extension.js",
-  "contributes": {
-    "commands": [
-      {
-        "command": "vscode-notify.helloWorld",
-        "title": "Hello World"
-      }
-    ]
+  "contributes": {},
+  "bin": {
+    "vscode-notify": "./cli/vscode-notify.js"
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",

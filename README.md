@@ -1,71 +1,114 @@
-# vscode-notify README
+# vscode-notify
 
-This is the README for your extension "vscode-notify". After writing up a brief description, we recommend including the following sections.
+Send notifications to VS Code from your terminal! This extension allows you to display notifications in VS Code from any terminal or external process.
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+- Send notifications to VS Code from the terminal
+- Support for different notification types (info, warning, error)
+- Automatic port management for multiple VS Code instances
+- Works with any workspace
 
-For example if there is an image subfolder under your extension project workspace:
+## Installation
 
-\!\[feature X\]\(images/feature-x.png\)
+### Extension Installation
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+1. Install the extension from VS Code marketplace or from source:
+   ```bash
+   # From source
+   npm install
+   npm run compile
+   ```
 
-## Requirements
+2. The extension activates automatically when VS Code starts
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+### CLI Installation
 
-## Extension Settings
+#### Global Installation (Recommended)
+```bash
+npm install -g .
+```
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+#### Local Installation
+```bash
+npm link
+```
 
-For example:
+## Usage
 
-This extension contributes the following settings:
+### Basic Usage
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+Send a simple notification:
+```bash
+vscode-notify "Build completed successfully"
+```
 
-## Known Issues
+### Notification Types
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+Send different types of notifications:
+```bash
+# Information (default)
+vscode-notify "Process started"
 
-## Release Notes
+# Warning
+vscode-notify --type warning "Low disk space"
 
-Users appreciate release notes as you update your extension.
+# Error
+vscode-notify --type error "Build failed!"
+```
 
-### 1.0.0
+### Advanced Usage
 
-Initial release of ...
+```bash
+# Send to specific port
+vscode-notify --port 7532 "Custom port notification"
 
-### 1.0.1
+# Send to all running VS Code instances
+vscode-notify --all "Broadcast message"
 
-Fixed issue #.
+# Show help
+vscode-notify --help
+```
 
-### 1.1.0
+## How It Works
 
-Added features X, Y, and Z.
+1. The VS Code extension starts an HTTP server on a dynamic port (7531-7540)
+2. Port information is saved to `.vscode/vscode-notify-port.json` in your workspace
+3. The CLI tool reads this file to find the correct port
+4. Notifications are sent via HTTP POST requests
 
----
+## Multiple VS Code Instances
 
-## Following extension guidelines
+The extension handles multiple VS Code instances automatically:
+- Each instance gets its own port
+- The CLI tool finds the correct instance based on your current directory
+- Use `--port` to target a specific instance
+- Use `--all` to notify all instances
 
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
+## Development
 
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
+```bash
+# Install dependencies
+npm install
 
-## Working with Markdown
+# Compile TypeScript
+npm run compile
 
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
+# Watch for changes
+npm run watch
 
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
+# Run tests
+npm test
+```
 
-## For more information
+## Troubleshooting
 
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
+If notifications aren't working:
+1. Ensure the extension is installed and activated
+2. Check VS Code's output panel for error messages
+3. Verify the port file exists: `.vscode/vscode-notify-port.json`
+4. Try using the `--port` flag with the default port: `vscode-notify --port 7531 "Test"`
 
-**Enjoy!**
+## License
+
+MIT
