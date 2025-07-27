@@ -1,125 +1,262 @@
-# vscode-notify
+# VS Code Notify 🔔
 
-Send desktop notifications from your terminal that can focus specific VS Code instances! This extension displays native OS notifications that appear outside of VS Code and allow you to quickly switch to the relevant workspace.
+Send desktop notifications from your terminal that can focus specific VS Code instances! This extension displays native OS notifications that appear outside of VS Code, allowing you to stay aware of important events across all your workspaces and quickly switch to the relevant project.
 
-## Features
+![VS Code Notify Demo](https://via.placeholder.com/800x400/1e1e1e/ffffff?text=VS+Code+Notify+Demo)
 
-- **Desktop notifications**: Native OS notifications that appear in your system's notification center
-- **Click-to-focus**: Clicking a notification brings the relevant VS Code window to the front
-- **Multi-workspace awareness**: Each notification knows which VS Code instance it came from
-- **Background visibility**: Notifications appear even when VS Code is minimized or in the background
-- **Cross-platform**: Works on macOS, Windows, and Linux
-- **Automatic port management**: Handles multiple VS Code instances without conflicts
+## ✨ Features
 
-## Installation
+- 🖥️ **Native Desktop Notifications**: Notifications appear in your system's notification center (macOS Notification Center, Windows Action Center, Linux notify-send)
+- 🎯 **Click-to-Focus**: Clicking a notification brings the exact VS Code window/workspace to the front
+- 🏢 **Multi-Workspace Aware**: Each notification shows which workspace it came from with clear workspace names
+- 🔄 **Background Visibility**: Notifications appear even when VS Code is minimized or you're working in other applications
+- 🌍 **Cross-Platform**: Works seamlessly on macOS, Windows, and Linux
+- ⚡ **Zero Configuration**: Automatic port management handles multiple VS Code instances without conflicts
+- 🎨 **Visual Types**: Different icons for info (ℹ️), warning (⚠️), and error (❌) notifications
 
-### Extension Installation
+## 🚀 Installation
 
-1. Install the extension from VS Code marketplace or from source:
-   ```bash
-   # From source
-   npm install
-   npm run compile
-   ```
-
-2. The extension activates automatically when VS Code starts
+### From VS Code Marketplace
+1. Open VS Code
+2. Go to Extensions (Ctrl+Shift+X / Cmd+Shift+X)
+3. Search for "vscode-notify"
+4. Click Install
 
 ### CLI Installation
+After installing the extension, install the command-line tool:
 
-#### Global Installation (Recommended)
 ```bash
-npm install -g .
+# Install globally (recommended)
+npm install -g vscode-notify
+
+# Or install locally in your project
+npm install vscode-notify
 ```
 
-#### Local Installation
+## 📖 Usage
+
+### Basic Notifications
+
 ```bash
-npm link
+# Simple info notification
+vscode-notify "Build completed successfully!"
+
+# Warning notification
+vscode-notify "Low disk space detected" --type warning
+
+# Error notification  
+vscode-notify "Tests failed!" --type error
 ```
 
-## Usage
+### Real-World Examples
 
-### Basic Usage
-
-Send a simple notification:
 ```bash
-vscode-notify "Build completed successfully"
-```
+# After a long build process
+make build && vscode-notify "✅ Build completed" || vscode-notify "❌ Build failed" --type error
 
-### Notification Types
+# Git hooks
+git commit && vscode-notify "📝 Commit successful"
 
-Send different types of notifications:
-```bash
-# Information (default)
-vscode-notify "Process started"
+# Test runs
+npm test && vscode-notify "✅ All tests passed" || vscode-notify "❌ Tests failed" --type error
 
-# Warning
-vscode-notify --type warning "Low disk space"
+# Deployment notifications
+deploy.sh && vscode-notify "🚀 Deployment successful" --type info
 
-# Error
-vscode-notify --type error "Build failed!"
+# Long-running scripts
+./long-process.sh; vscode-notify "Process finished" --type info
 ```
 
 ### Advanced Usage
 
 ```bash
-# Send to specific port
-vscode-notify --port 7532 "Custom port notification"
+# Target specific VS Code instance by port
+vscode-notify "Custom message" --port 7532
 
-# Send to all running VS Code instances
-vscode-notify --all "Broadcast message"
+# Broadcast to all running VS Code instances
+vscode-notify "Important announcement" --all
 
-# Show help
+# Show all available options
 vscode-notify --help
 ```
 
-## How It Works
+## 🔧 How It Works
 
-1. The VS Code extension starts an HTTP server on a dynamic port (7531-7540)
-2. Port information is saved to `.vscode/vscode-notify-port.json` in your workspace
-3. The CLI tool reads this file to find the correct port
-4. Notifications are sent via HTTP POST requests
-5. The extension displays native desktop notifications using your OS's notification system
-6. Clicking a notification focuses the specific VS Code window that received the notification
+```mermaid
+graph TD
+    A[Terminal Command] --> B[CLI Tool]
+    B --> C[Find VS Code Instance]
+    C --> D[Read .vscode/vscode-notify-port.json]
+    D --> E[Send HTTP Request]
+    E --> F[VS Code Extension]
+    F --> G[Desktop Notification]
+    G --> H[User Clicks]
+    H --> I[Focus VS Code Window]
+```
 
-## Multiple VS Code Instances
+1. **Extension Startup**: When VS Code starts, the extension creates an HTTP server on an available port (7531-7540)
+2. **Port Discovery**: Port information is saved to `.vscode/vscode-notify-port.json` in your workspace
+3. **CLI Detection**: The CLI tool automatically finds the correct VS Code instance based on your current directory
+4. **Notification Delivery**: Sends notification data via HTTP POST to the extension
+5. **Desktop Display**: Extension shows native OS notification with workspace context
+6. **Click Handling**: Clicking the notification opens and focuses the specific VS Code workspace
 
-The extension handles multiple VS Code instances automatically:
-- Each instance gets its own port and shows notifications with the workspace name
-- The CLI tool finds the correct instance based on your current directory
-- Clicking any notification focuses the specific VS Code window that triggered it
-- Use `--port` to target a specific instance
-- Use `--all` to notify all instances
+## 🏢 Multiple Workspaces
 
-### Example Workflow
-1. You have VS Code open with "Project A" and "Project B"
-2. In Project A's terminal: `vscode-notify "Build completed"`
-3. A desktop notification appears titled "ℹ️ Project A"
-4. Even if you're working in Project B, clicking the notification switches focus to Project A
+Perfect for developers working with multiple projects simultaneously:
 
-## Development
+### Automatic Instance Detection
+- Each VS Code window gets its own unique port
+- CLI automatically detects which workspace you're in
+- Notifications show clear workspace names in the title
 
+### Example Scenario
 ```bash
+# Terminal in ~/projects/frontend
+cd ~/projects/frontend
+vscode-notify "Frontend build complete"
+# Shows: "ℹ️ frontend - Frontend build complete"
+
+# Terminal in ~/projects/backend  
+cd ~/projects/backend
+vscode-notify "API tests passed" --type info
+# Shows: "ℹ️ backend - API tests passed"
+```
+
+### Manual Control
+```bash
+# Send to specific instance
+vscode-notify "Message" --port 7533
+
+# Send to all instances
+vscode-notify "Server maintenance in 5 minutes" --all
+```
+
+## 🛠️ Development & Contributing
+
+### Setup Development Environment
+```bash
+# Clone the repository
+git clone <repository-url>
+cd vscode-notify
+
 # Install dependencies
 npm install
 
 # Compile TypeScript
 npm run compile
 
-# Watch for changes
+# Watch for changes during development
 npm run watch
 
 # Run tests
 npm test
+
+# Package extension
+npm run package
 ```
 
-## Troubleshooting
+### Project Structure
+```
+vscode-notify/
+├── src/
+│   └── extension.ts          # Main extension code
+├── cli/
+│   └── vscode-notify.js      # Command-line interface
+├── out/                      # Compiled JavaScript
+├── package.json              # Extension manifest
+└── README.md                 # This file
+```
 
-If notifications aren't working:
-1. Ensure the extension is installed and activated
-2. Check VS Code's output panel for error messages
-3. Verify the port file exists: `.vscode/vscode-notify-port.json`
-4. Try using the `--port` flag with the default port: `vscode-notify --port 7531 "Test"`
+### Architecture
+- **Extension**: HTTP server with desktop notification integration
+- **CLI**: Lightweight Node.js script for sending notifications
+- **Communication**: JSON over HTTP with automatic port discovery
+- **Focus**: Platform-specific window focusing using OS commands
 
-## License
+## 🐛 Troubleshooting
 
-MIT
+### Common Issues
+
+**Notifications not appearing:**
+```bash
+# Check if extension is running
+ls .vscode/vscode-notify-port.json
+
+# Test with explicit port
+vscode-notify "test" --port 7531
+
+# Check VS Code developer console
+# Help > Toggle Developer Tools > Console
+```
+
+**Wrong VS Code instance focused:**
+```bash
+# Ensure you're in the correct directory
+pwd
+
+# Check port file contents
+cat .vscode/vscode-notify-port.json
+
+# Use specific port if needed
+vscode-notify "message" --port 7532
+```
+
+**CLI not found:**
+```bash
+# Reinstall globally
+npm install -g vscode-notify
+
+# Or use npx
+npx vscode-notify "message"
+```
+
+### Platform-Specific Notes
+
+**macOS:**
+- Notifications appear in Notification Center
+- Requires notification permissions for VS Code
+- Click-to-focus uses `open` command
+
+**Windows:**
+- Notifications appear in Action Center
+- Works with Windows 10/11 toast notifications
+- Focus behavior may vary based on Windows version
+
+**Linux:**
+- Uses `notify-send` or similar notification daemon
+- Requires notification service to be running
+- Focus behavior depends on window manager
+
+## 📋 Requirements
+
+- **VS Code**: Version 1.102.0 or higher
+- **Node.js**: Version 14 or higher (for CLI tool)
+- **Operating System**: macOS, Windows 10+, or Linux with notification support
+
+## 🤝 Contributing
+
+We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
+
+### Areas for Contribution
+- 🌐 Improved cross-platform compatibility
+- 🎨 Custom notification themes
+- 📱 Mobile integration (VS Code on tablets)
+- 🔧 Additional CLI options
+- 📚 Documentation improvements
+
+## 📄 License
+
+MIT License - see [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- Built with [node-notifier](https://github.com/mikaelbr/node-notifier) for cross-platform notifications
+- Inspired by the need for better developer workflow integration
+- Thanks to the VS Code extension community for guidance and best practices
+
+---
+
+**Made with ❤️ for developers who love staying informed across multiple projects**
+
+[Report Issues](https://github.com/your-username/vscode-notify/issues) | [Request Features](https://github.com/your-username/vscode-notify/issues) | [View Source](https://github.com/your-username/vscode-notify)
