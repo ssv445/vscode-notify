@@ -47,7 +47,7 @@ async function writePortInfo(port: number) {
 	}
 
 	const vscodeDir = path.join(workspaceFolder.uri.fsPath, '.vscode');
-	const portFile = path.join(vscodeDir, 'vscode-notify-port.json');
+	const portFile = path.join(vscodeDir, 'vscode-notify-desktop-port.json');
 
 	if (!fs.existsSync(vscodeDir)) {
 		fs.mkdirSync(vscodeDir, { recursive: true });
@@ -69,7 +69,7 @@ async function removePortInfo() {
 		return;
 	}
 
-	const portFile = path.join(workspaceFolder.uri.fsPath, '.vscode', 'vscode-notify-port.json');
+	const portFile = path.join(workspaceFolder.uri.fsPath, '.vscode', 'vscode-notify-desktop-port.json');
 	try {
 		if (fs.existsSync(portFile)) {
 			fs.unlinkSync(portFile);

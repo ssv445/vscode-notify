@@ -12,7 +12,8 @@
       "Bash(npm pack:*)",
       "Bash(npm view:*)",
       "Bash(npx:*)",
-      "Bash(npm publish:*)"
+      "Bash(npm publish:*)",
+      "Bash(mv:*)"
     ],
     "deny": []
   }

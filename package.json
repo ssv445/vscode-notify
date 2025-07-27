@@ -2,7 +2,7 @@
   "name": "vscode-notify-desktop",
   "displayName": "VS Code Desktop Notify",
   "description": "Send desktop notifications from terminal that focus specific VS Code instances",
-  "version": "0.1.1",
+  "version": "0.2.1",
   "publisher": "ssv445",
   "author": "Shyam Verma",
   "license": "MIT",
@@ -37,7 +37,7 @@
   "main": "./out/extension.js",
   "contributes": {},
   "bin": {
-    "vscode-notify": "./cli/vscode-notify-desktop.js"
+    "vscode-notify-desktop": "./cli/vscode-notify-desktop.js"
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",

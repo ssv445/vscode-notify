@@ -19,7 +19,7 @@ Send desktop notifications from your terminal that can focus specific VS Code in
 ### From VS Code Marketplace
 1. Open VS Code
 2. Go to Extensions (Ctrl+Shift+X / Cmd+Shift+X)
-3. Search for "vscode-notify"
+3. Search for "VS Code Desktop Notify"
 4. Click Install
 
 ### CLI Installation
@@ -36,7 +36,7 @@ npm install vscode-notify-desktop
 npx vscode-notify-desktop "Your message"
 ```
 
-**Note**: After installation, the command is still `vscode-notify` for convenience.
+**Note**: The command is now `vscode-notify-desktop` for full consistency.
 
 ## 📖 Usage
 
@@ -44,45 +44,45 @@ npx vscode-notify-desktop "Your message"
 
 ```bash
 # Simple info notification
-vscode-notify "Build completed successfully!"
+vscode-notify-desktop "Build completed successfully!"
 
 # Warning notification
-vscode-notify "Low disk space detected" --type warning
+vscode-notify-desktop "Low disk space detected" --type warning
 
 # Error notification  
-vscode-notify "Tests failed!" --type error
+vscode-notify-desktop "Tests failed!" --type error
 ```
 
 ### Real-World Examples
 
 ```bash
 # After a long build process
-make build && vscode-notify "✅ Build completed" || vscode-notify "❌ Build failed" --type error
+make build && vscode-notify-desktop "✅ Build completed" || vscode-notify-desktop "❌ Build failed" --type error
 
 # Git hooks
-git commit && vscode-notify "📝 Commit successful"
+git commit && vscode-notify-desktop "📝 Commit successful"
 
 # Test runs
-npm test && vscode-notify "✅ All tests passed" || vscode-notify "❌ Tests failed" --type error
+npm test && vscode-notify-desktop "✅ All tests passed" || vscode-notify-desktop "❌ Tests failed" --type error
 
 # Deployment notifications
-deploy.sh && vscode-notify "🚀 Deployment successful" --type info
+deploy.sh && vscode-notify-desktop "🚀 Deployment successful" --type info
 
 # Long-running scripts
-./long-process.sh; vscode-notify "Process finished" --type info
+./long-process.sh; vscode-notify-desktop "Process finished" --type info
 ```
 
 ### Advanced Usage
 
 ```bash
 # Target specific VS Code instance by port
-vscode-notify "Custom message" --port 7532
+vscode-notify-desktop "Custom message" --port 7532
 
 # Broadcast to all running VS Code instances
-vscode-notify "Important announcement" --all
+vscode-notify-desktop "Important announcement" --all
 
 # Show all available options
-vscode-notify --help
+vscode-notify-desktop --help
 ```
 
 ## 🔧 How It Works
@@ -119,22 +119,22 @@ Perfect for developers working with multiple projects simultaneously:
 ```bash
 # Terminal in ~/projects/frontend
 cd ~/projects/frontend
-vscode-notify "Frontend build complete"
+vscode-notify-desktop "Frontend build complete"
 # Shows: "ℹ️ frontend - Frontend build complete"
 
 # Terminal in ~/projects/backend  
 cd ~/projects/backend
-vscode-notify "API tests passed" --type info
+vscode-notify-desktop "API tests passed" --type info
 # Shows: "ℹ️ backend - API tests passed"
 ```
 
 ### Manual Control
 ```bash
 # Send to specific instance
-vscode-notify "Message" --port 7533
+vscode-notify-desktop "Message" --port 7533
 
 # Send to all instances
-vscode-notify "Server maintenance in 5 minutes" --all
+vscode-notify-desktop "Server maintenance in 5 minutes" --all
 ```
 
 ## 🛠️ Development & Contributing
@@ -163,14 +163,14 @@ npm run package
 
 ### Project Structure
 ```
-vscode-notify/
+vscode-notify-desktop/
 ├── src/
-│   └── extension.ts          # Main extension code
+│   └── extension.ts              # Main extension code
 ├── cli/
-│   └── vscode-notify.js      # Command-line interface
-├── out/                      # Compiled JavaScript
-├── package.json              # Extension manifest
-└── README.md                 # This file
+│   └── vscode-notify-desktop.js  # Command-line interface
+├── out/                          # Compiled JavaScript
+├── package.json                  # Extension manifest
+└── README.md                     # This file
 ```
 
 ### Architecture
@@ -186,10 +186,10 @@ vscode-notify/
 **Notifications not appearing:**
 ```bash
 # Check if extension is running
-ls .vscode/vscode-notify-port.json
+ls .vscode/vscode-notify-desktop-port.json
 
 # Test with explicit port
-vscode-notify "test" --port 7531
+vscode-notify-desktop "test" --port 7531
 
 # Check VS Code developer console
 # Help > Toggle Developer Tools > Console
@@ -201,10 +201,10 @@ vscode-notify "test" --port 7531
 pwd
 
 # Check port file contents
-cat .vscode/vscode-notify-port.json
+cat .vscode/vscode-notify-desktop-port.json
 
 # Use specific port if needed
-vscode-notify "message" --port 7532
+vscode-notify-desktop "message" --port 7532
 ```
 
 **CLI not found:**
@@ -264,4 +264,4 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 **Made with ❤️ for developers who love staying informed across multiple projects**
 
-[Report Issues](https://github.com/your-username/vscode-notify/issues) | [Request Features](https://github.com/your-username/vscode-notify/issues) | [View Source](https://github.com/your-username/vscode-notify)
+[Report Issues](https://github.com/ssv445/vscode-notify-desktop/issues) | [Request Features](https://github.com/ssv445/vscode-notify-desktop/issues) | [View Source](https://github.com/ssv445/vscode-notify-desktop)

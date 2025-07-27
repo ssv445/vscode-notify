@@ -10,7 +10,7 @@ function findPortFile() {
 	
 	while (currentDir !== path.dirname(currentDir)) {
 		const vscodeDir = path.join(currentDir, '.vscode');
-		const portFile = path.join(vscodeDir, 'vscode-notify-port.json');
+		const portFile = path.join(vscodeDir, 'vscode-notify-desktop-port.json');
 		
 		if (fs.existsSync(portFile)) {
 			try {
@@ -110,10 +110,10 @@ function parseArgs() {
 
 function showHelp() {
 	console.log(`
-vscode-notify - Send notifications to VS Code
+vscode-notify-desktop - Send desktop notifications to VS Code
 
 Usage:
-  vscode-notify [options] <message>
+  vscode-notify-desktop [options] <message>
 
 Options:
   -t, --type <type>    Notification type: info, warning, error (default: info)
@@ -122,10 +122,10 @@ Options:
   -h, --help           Show this help message
 
 Examples:
-  vscode-notify "Build completed successfully"
-  vscode-notify --type error "Tests failed!"
-  vscode-notify -t warning "Low disk space"
-  vscode-notify --port 7532 "Custom port notification"
+  vscode-notify-desktop "Build completed successfully"
+  vscode-notify-desktop --type error "Tests failed!"
+  vscode-notify-desktop -t warning "Low disk space"
+  vscode-notify-desktop --port 7532 "Custom port notification"
 `);
 }
 
