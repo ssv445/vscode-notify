@@ -2,6 +2,8 @@ import * as vscode from 'vscode';
 import * as http from 'http';
 import * as fs from 'fs';
 import * as path from 'path';
+import { exec } from 'child_process';
+const notifier = require('node-notifier');
 
 let server: http.Server | undefined;
 
@@ -9,6 +11,7 @@ interface NotificationRequest {
 	message: string;
 	type?: 'info' | 'warning' | 'error';
 	duration?: number;
+	workspacePath?: string;
 }
 
 interface PortInfo {
@@ -76,6 +79,68 @@ async function removePortInfo() {
 	}
 }
 
+function showDesktopNotification(notification: NotificationRequest) {
+	const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
+	const workspaceName = workspaceFolder ? path.basename(workspaceFolder.uri.fsPath) : 'VS Code';
+	
+	let title = 'VS Code';
+	
+	// Set title based on notification type
+	switch (notification.type) {
+		case 'error':
+			title = `❌ ${workspaceName}`;
+			break;
+		case 'warning':
+			title = `⚠️ ${workspaceName}`;
+			break;
+		case 'info':
+		default:
+			title = `ℹ️ ${workspaceName}`;
+			break;
+	}
+	
+	notifier.notify({
+		title: title,
+		message: notification.message,
+		sound: true,
+		wait: true, // Keep notification until user acts
+		timeout: 15, // 15 seconds timeout
+		closeLabel: 'Close',
+		actions: 'Focus VS Code',
+		dropdownLabel: 'Options'
+	}, (err: any, response: any) => {
+		// Handle notification interaction
+		console.log('Notification response:', response, 'Error:', err);
+		if (!err && (response === 'activate' || response === 'Focus VS Code')) {
+			// User clicked the notification or the action
+			console.log('Attempting to focus VS Code window...');
+			focusVSCodeWindow();
+		}
+	});
+}
+
+async function focusVSCodeWindow() {
+	try {
+		console.log('Attempting to focus VS Code...');
+		
+		// Method 1: Use macOS open command to force focus
+		if (process.platform === 'darwin') {
+			exec('open -a "Visual Studio Code"', (error) => {
+				if (error) {
+					console.error('Error with open command:', error);
+				}
+			});
+		}
+		
+		// Method 2: Focus active editor
+		await vscode.commands.executeCommand('workbench.action.focusActiveEditorGroup');
+		
+		console.log('Focus commands executed');
+	} catch (error) {
+		console.error('Error focusing VS Code window:', error);
+	}
+}
+
 export async function activate(context: vscode.ExtensionContext) {
 	console.log('vscode-notify extension is now active!');
 
@@ -96,18 +161,8 @@ export async function activate(context: vscode.ExtensionContext) {
 					try {
 						const notification: NotificationRequest = JSON.parse(body);
 						
-						switch (notification.type) {
-							case 'error':
-								vscode.window.showErrorMessage(notification.message);
-								break;
-							case 'warning':
-								vscode.window.showWarningMessage(notification.message);
-								break;
-							case 'info':
-							default:
-								vscode.window.showInformationMessage(notification.message);
-								break;
-						}
+						// Show desktop notification instead of VS Code internal notification
+						showDesktopNotification(notification);
 						
 						res.writeHead(200, { 'Content-Type': 'application/json' });
 						res.end(JSON.stringify({ success: true }));

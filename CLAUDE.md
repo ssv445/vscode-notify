@@ -30,19 +30,23 @@ npm run vscode:prepublish
 
 ## Architecture
 
-The extension implements terminal-to-VSCode notifications using an HTTP server approach:
+The extension implements terminal-to-desktop notifications using an HTTP server approach with native OS notifications:
 
 - **Entry Point**: `src/extension.ts` - Contains `activate()` and `deactivate()` functions
 - **HTTP Server**: Runs on localhost with dynamic port allocation (7531-7540)
+- **Desktop Notifications**: Uses `node-notifier` for native OS notifications
+- **Click Handlers**: Notifications focus VS Code window when clicked
 - **Port Discovery**: Writes port info to `.vscode/vscode-notify-port.json` in workspace
 - **CLI Tool**: `cli/vscode-notify.js` - Node.js script that sends HTTP requests
 - **Compilation**: TypeScript files in `src/` compile to JavaScript in `out/`
 
 Key components:
 1. **Dynamic Port Allocation**: Handles multiple VS Code instances by finding available ports
-2. **Workspace-based Port Files**: Each workspace stores its server port for CLI discovery
-3. **Process Validation**: Checks if VS Code process is still running before using cached port
-4. **Notification Types**: Supports info, warning, and error message types
+2. **Native Desktop Notifications**: Shows notifications in OS notification center using node-notifier
+3. **Workspace Identification**: Each notification includes workspace name and can focus the correct window
+4. **Click-to-Focus**: Clicking notifications executes VS Code commands to focus the window
+5. **Process Validation**: Checks if VS Code process is still running before using cached port
+6. **Cross-platform Support**: Works on macOS, Windows, and Linux notification systems
 
 ## Testing
 

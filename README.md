@@ -1,13 +1,15 @@
 # vscode-notify
 
-Send notifications to VS Code from your terminal! This extension allows you to display notifications in VS Code from any terminal or external process.
+Send desktop notifications from your terminal that can focus specific VS Code instances! This extension displays native OS notifications that appear outside of VS Code and allow you to quickly switch to the relevant workspace.
 
 ## Features
 
-- Send notifications to VS Code from the terminal
-- Support for different notification types (info, warning, error)
-- Automatic port management for multiple VS Code instances
-- Works with any workspace
+- **Desktop notifications**: Native OS notifications that appear in your system's notification center
+- **Click-to-focus**: Clicking a notification brings the relevant VS Code window to the front
+- **Multi-workspace awareness**: Each notification knows which VS Code instance it came from
+- **Background visibility**: Notifications appear even when VS Code is minimized or in the background
+- **Cross-platform**: Works on macOS, Windows, and Linux
+- **Automatic port management**: Handles multiple VS Code instances without conflicts
 
 ## Installation
 
@@ -76,14 +78,23 @@ vscode-notify --help
 2. Port information is saved to `.vscode/vscode-notify-port.json` in your workspace
 3. The CLI tool reads this file to find the correct port
 4. Notifications are sent via HTTP POST requests
+5. The extension displays native desktop notifications using your OS's notification system
+6. Clicking a notification focuses the specific VS Code window that received the notification
 
 ## Multiple VS Code Instances
 
 The extension handles multiple VS Code instances automatically:
-- Each instance gets its own port
+- Each instance gets its own port and shows notifications with the workspace name
 - The CLI tool finds the correct instance based on your current directory
+- Clicking any notification focuses the specific VS Code window that triggered it
 - Use `--port` to target a specific instance
 - Use `--all` to notify all instances
+
+### Example Workflow
+1. You have VS Code open with "Project A" and "Project B"
+2. In Project A's terminal: `vscode-notify "Build completed"`
+3. A desktop notification appears titled "ℹ️ Project A"
+4. Even if you're working in Project B, clicking the notification switches focus to Project A
 
 ## Development
 

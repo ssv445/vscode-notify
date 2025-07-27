@@ -34,7 +34,12 @@ function findPortFile() {
 }
 
 function sendNotification(port, message, type = 'info') {
-	const data = JSON.stringify({ message, type });
+	const workspacePath = process.cwd();
+	const data = JSON.stringify({ 
+		message, 
+		type, 
+		workspacePath 
+	});
 	
 	const options = {
 		hostname: 'localhost',
