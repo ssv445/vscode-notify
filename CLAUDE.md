@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-vscode-notify is a VS Code extension that aims to show notifications in VS Code from the terminal. Currently, it's a minimal extension scaffold that needs to be developed to implement its core functionality.
+vscode-notify-desktop is a VS Code extension that aims to show notifications in VS Code from the terminal. Currently, it's a minimal extension scaffold that needs to be developed to implement its core functionality.
 
 ## Development Commands
 
@@ -36,8 +36,8 @@ The extension implements terminal-to-desktop notifications using an HTTP server 
 - **HTTP Server**: Runs on localhost with dynamic port allocation (7531-7540)
 - **Desktop Notifications**: Uses `node-notifier` for native OS notifications
 - **Click Handlers**: Notifications focus VS Code window when clicked
-- **Port Discovery**: Writes port info to `.vscode/vscode-notify-port.json` in workspace
-- **CLI Tool**: `cli/vscode-notify.js` - Node.js script that sends HTTP requests
+- **Port Discovery**: Writes port info to `.vscode/vscode-notify-desktop-port.json` in workspace
+- **CLI Tool**: `cli/vscode-notify-desktop.js` - Node.js script that sends HTTP requests
 - **Compilation**: TypeScript files in `src/` compile to JavaScript in `out/`
 
 Key components:

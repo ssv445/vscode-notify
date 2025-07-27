@@ -1,0 +1,44 @@
+# Source files
+src/
+*.ts
+tsconfig.json
+eslint.config.mjs
+
+# Development files
+.vscode/
+.vscode-test/
+.github/
+.git/
+.gitignore
+
+# Test files
+test/
+*.test.js
+
+# Build artifacts
+*.vsix
+vsc-extension-quickstart.md
+
+# Documentation (except README)
+CHANGELOG.md
+
+# Development dependencies
+node_modules/
+npm-debug.log*
+.npm
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.idea/
+*.swp
+*.swo
+
+# Temporary files
+*.tmp
+*.temp
+
+# Extension specific
+.vscode/vscode-notify-desktop-port.json

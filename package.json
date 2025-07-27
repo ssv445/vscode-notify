@@ -1,10 +1,32 @@
 {
-  "name": "vscode-notify",
-  "displayName": "vscode-notify",
-  "description": "Shows notification in VS code from terminal",
-  "version": "0.0.2",
+  "name": "vscode-notify-desktop",
+  "displayName": "VS Code Desktop Notify",
+  "description": "Send desktop notifications from terminal that focus specific VS Code instances",
+  "version": "0.1.1",
+  "publisher": "ssv445",
+  "author": "Shyam Verma",
+  "license": "MIT",
+  "homepage": "https://github.com/ssv445/vscode-notify-desktop#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ssv445/vscode-notify-desktop.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ssv445/vscode-notify-desktop/issues"
+  },
+  "keywords": [
+    "vscode",
+    "notification",
+    "desktop",
+    "terminal",
+    "cli",
+    "productivity",
+    "workspace",
+    "development"
+  ],
   "engines": {
-    "vscode": "^1.102.0"
+    "vscode": "^1.102.0",
+    "node": ">=14.0.0"
   },
   "categories": [
     "Other"
@@ -15,7 +37,7 @@
   "main": "./out/extension.js",
   "contributes": {},
   "bin": {
-    "vscode-notify": "./cli/vscode-notify.js"
+    "vscode-notify": "./cli/vscode-notify-desktop.js"
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",

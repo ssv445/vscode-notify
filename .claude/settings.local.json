@@ -8,7 +8,11 @@
       "Bash(find:*)",
       "Bash(vsce package:*)",
       "Bash(code:*)",
-      "Bash(vscode-notify:*)"
+      "Bash(vscode-notify:*)",
+      "Bash(npm pack:*)",
+      "Bash(npm view:*)",
+      "Bash(npx:*)",
+      "Bash(npm publish:*)"
     ],
     "deny": []
   }

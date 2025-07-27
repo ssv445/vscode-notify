@@ -1,11 +1,35 @@
+# Source files
+src/**
+*.ts
+tsconfig.json
+eslint.config.mjs
+
+# Development files
 .vscode/**
 .vscode-test/**
-src/**
+.git/**
 .gitignore
 .yarnrc
 vsc-extension-quickstart.md
-**/tsconfig.json
-**/eslint.config.mjs
+
+# Test files and maps
+**/*.test.js
 **/*.map
-**/*.ts
-**/.vscode-test.*
+
+# NPM specific files (not needed for VS Code extension)
+.npmignore
+.npmrc
+
+# Logs and temp files
+*.log
+*.tmp
+.DS_Store
+
+# Node modules test files
+node_modules/**/test/**
+node_modules/**/*.test.js
+node_modules/**/docs/**
+node_modules/**/examples/**
+
+# Development specific port files
+.vscode/vscode-notify-desktop-port.json

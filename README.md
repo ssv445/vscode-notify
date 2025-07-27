@@ -27,11 +27,16 @@ After installing the extension, install the command-line tool:
 
 ```bash
 # Install globally (recommended)
-npm install -g vscode-notify
+npm install -g vscode-notify-desktop
 
 # Or install locally in your project
-npm install vscode-notify
+npm install vscode-notify-desktop
+
+# Or use without installing
+npx vscode-notify-desktop "Your message"
 ```
+
+**Note**: After installation, the command is still `vscode-notify` for convenience.
 
 ## 📖 Usage
 
@@ -205,10 +210,10 @@ vscode-notify "message" --port 7532
 **CLI not found:**
 ```bash
 # Reinstall globally
-npm install -g vscode-notify
+npm install -g vscode-notify-desktop
 
 # Or use npx
-npx vscode-notify "message"
+npx vscode-notify-desktop "message"
 ```
 
 ### Platform-Specific Notes
