@@ -5,7 +5,10 @@
       "Bash(npm run compile:*)",
       "Bash(npm install:*)",
       "Bash(node:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(vsce package:*)",
+      "Bash(code:*)",
+      "Bash(vscode-notify:*)"
     ],
     "deny": []
   }

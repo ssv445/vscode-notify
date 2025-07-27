@@ -123,8 +123,19 @@ async function focusVSCodeWindow() {
 	try {
 		console.log('Attempting to focus VS Code...');
 		
-		// Method 1: Use macOS open command to force focus
-		if (process.platform === 'darwin') {
+		// Get the current workspace folder
+		const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
+		
+		if (process.platform === 'darwin' && workspaceFolder) {
+			// Method 1: Open the specific workspace folder to focus this instance
+			const workspacePath = workspaceFolder.uri.fsPath;
+			exec(`open -a "Visual Studio Code" "${workspacePath}"`, (error) => {
+				if (error) {
+					console.error('Error with open command:', error);
+				}
+			});
+		} else if (process.platform === 'darwin') {
+			// Fallback: just open VS Code
 			exec('open -a "Visual Studio Code"', (error) => {
 				if (error) {
 					console.error('Error with open command:', error);
@@ -132,7 +143,7 @@ async function focusVSCodeWindow() {
 			});
 		}
 		
-		// Method 2: Focus active editor
+		// Method 2: Focus active editor (for good measure)
 		await vscode.commands.executeCommand('workbench.action.focusActiveEditorGroup');
 		
 		console.log('Focus commands executed');
